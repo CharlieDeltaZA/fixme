@@ -15,11 +15,11 @@ public class Validation {
                 System.out.println(ANSI_RED + "Incorrect format! Incorrect number of parameters.\n" + ANSI_RESET);
                 return false;
             }
-            if (!arr[0].equals("Sell") && !arr[0].equals("Buy")) {
+            if (!arr[0].trim().equals("Sell") && !arr[0].trim().equals("Buy")) {
                 System.out.println(ANSI_RED + "Incorrect format! Invalid 'Buy' or 'Sell' parameter.\n" + ANSI_RESET);
                 return false;
             }
-            if (!validateString(arr[1]) || !validateNumber(arr[2]) || !validateNumber(arr[3])) {
+            if (!validateString(arr[1].trim()) || !validateNumber(arr[2].trim()) || !validateNumber(arr[3].trim())) {
                 System.out.println(ANSI_RED + "Incorrect format! Please pay attention to what must be digits or characters only.\n" + ANSI_RESET);
                 return false;
             }

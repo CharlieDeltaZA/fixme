@@ -13,9 +13,9 @@ public class Business {
     private static int ID;
 
     private void sendOrder(String[] order) {
-        Fix fix = new Fix();
+        Fix fix = new Fix(order);
 
-        String msg = fix.constructFix(ID, order);
+        String msg = fix.constructFix(ID);
 
         if (msg != null) {
             // sends constructed msg to router
