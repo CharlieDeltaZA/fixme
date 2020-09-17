@@ -4,10 +4,18 @@ public class Broker {
 
     public static void main(String[] args) {
 
-        // gives user option to connect or quit
-        // connect to router - stores ID that is given
-        // now buy or sell input can be taken
-        // constructs FIX msg
-        // prints result returned
+        Business business = new Business();
+
+        clearTerminal();
+
+        if (business.getInitialization()) {
+            business.doInitialization();
+            business.takeOrders();
+        }
+    }
+
+    public static void clearTerminal() {
+        System.out.print("\033[H\033[2J");
+        System.out.flush();
     }
 }
