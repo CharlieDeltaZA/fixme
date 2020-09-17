@@ -11,15 +11,19 @@ public class Business {
     private static final String ANSI_GREEN = "\u001B[32m";
     private static final String ANSI_CYAN = "\u001B[36m";
     private static int ID;
-    private String fix;
 
-    private void sendOrder(String order) {
+    private void sendOrder(String[] order) {
         Fix fix = new Fix();
 
         String msg = fix.constructFix(ID, order);
 
-        // sends constructed msg to router
-        // prints results returned
+        if (msg != null) {
+            // sends constructed msg to router
+            // prints results returned
+        } else {
+            System.out.println("FIX message could not be created! Please try again.");
+        }
+
     }
 
     public void takeOrders() {
@@ -39,7 +43,7 @@ public class Business {
                     printTakeOrder();
                     line = scan.nextLine();
                 }
-                sendOrder(line);
+                sendOrder(line.split("-"));
             }
         }
     }
