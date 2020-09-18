@@ -36,7 +36,7 @@ public class Validation {
     private boolean validateNumber(String str) {
 
         for (int i = 0; i < str.length(); i++) {
-            if (Character.isDigit(str.charAt(i))) {
+            if (!Character.isDigit(str.charAt(i))) {
                 return false;
             }
         }
@@ -44,6 +44,7 @@ public class Validation {
     }
 
     private boolean validateString(String str) {
+
         str = str.toLowerCase();
         char[] charArray = str.toCharArray();
 

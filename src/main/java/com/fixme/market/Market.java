@@ -4,6 +4,7 @@ public class Market {
 
     public static void main(String[] args) {
 
+        // initiates stock
         // connects to router
         // awaits messages from router
         // does order of buy/sell

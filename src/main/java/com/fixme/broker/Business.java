@@ -1,6 +1,6 @@
 package com.fixme.broker;
 
-import com.fixme.fix.Fix;
+import com.fixme.Fix;
 
 import java.util.Scanner;
 
@@ -18,6 +18,7 @@ public class Business {
         String msg = fix.constructFix(ID);
 
         if (msg != null) {
+            System.out.println(msg); //
             // sends constructed msg to router
             // prints results returned
         } else {
@@ -68,10 +69,9 @@ public class Business {
     }
 
     private void printTakeOrder() {
-        System.out.println(ANSI_CYAN + "You can provide a buy or sell order in the following format:" + ANSI_RESET);
-        System.out.println("Buy - Object - Quantity - Funds Available");
+        System.out.println("You can provide a buy or sell order in the following format: (Enter 'Q' to quit session)");
+        System.out.println(ANSI_CYAN + "Buy - Object - Quantity - Funds Available" + ANSI_RESET);
         System.out.println("OR");
-        System.out.println("Sell - Object - Quantity - Selling Price Per Object");
-        System.out.println(ANSI_CYAN + "Enter 'Q' to quit session." + ANSI_RESET);
+        System.out.println(ANSI_CYAN + "Sell - Object - Quantity - Selling Price Per Object" + ANSI_RESET);
     }
 }
