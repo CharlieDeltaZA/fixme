@@ -9,8 +9,8 @@ public class Router {
         // connect to market
         // construct executor class
         // open port 5000 for brokers
-        // new broker given an ID (hand shake happens)
-        // new broker buy/sell msg must be added to executor thread -> which handles send&receive to market
-        // sends msg to broker
+        // new broker added to executor thread -> given an ID (hand shake happens)
+        //                                     -> buy/sell msg sent to market
+        //                                     -> sends outcome msg to broker
     }
 }
