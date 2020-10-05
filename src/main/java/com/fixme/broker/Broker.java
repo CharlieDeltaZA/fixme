@@ -9,7 +9,6 @@ public class Broker {
         clearTerminal();
 
         if (business.getInitialization()) {
-            business.doInitialization();
             business.takeOrders();
         }
     }

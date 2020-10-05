@@ -2,6 +2,12 @@ package com.fixme.broker;
 
 import com.fixme.Fix;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.Scanner;
 
 public class Business {
@@ -11,6 +17,32 @@ public class Business {
     private static final String ANSI_GREEN = "\u001B[32m";
     private static final String ANSI_CYAN = "\u001B[36m";
     private static int ID;
+    Socket bSock;
+    PrintWriter out;
+    BufferedReader in;
+
+    public Business() {
+        // establishes connection to router - stores ID that is given
+        try {
+            bSock = new Socket("localhost", 5000);
+            out = new PrintWriter(bSock.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(bSock.getInputStream()));
+
+            out.println("Broker Connecting");
+
+            String fromServer;
+            while ((fromServer = in.readLine()) != null) {
+                System.out.println("Server: " + fromServer); // debugging
+                // check for ID return from router
+                // assign ID
+                break;
+            }
+        } catch (UnknownHostException e) {
+            System.out.println("Unknown host: " + e);
+        } catch (IOException e) {
+            System.out.println("IOException: " + e);
+        }
+    }
 
     private void sendOrder(String[] order) {
         Fix fix = new Fix(order);
@@ -18,13 +50,24 @@ public class Business {
         String msg = fix.constructFix(ID);
 
         if (msg != null) {
-            System.out.println(msg); //
-            // sends constructed msg to router
-            // prints results returned
+            System.out.println(msg); // debugging
+
+            try {
+                out.println(msg);
+
+                String fromServer;
+                while ((fromServer = in.readLine()) != null) {
+                    System.out.println("Server: " + fromServer);
+                    // check for FIX msg return from market
+                    // prints results returned
+                    break;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         } else {
             System.out.println("FIX message could not be created! Please try again.");
         }
-
     }
 
     public void takeOrders() {
@@ -47,11 +90,6 @@ public class Business {
                 sendOrder(line.split("-"));
             }
         }
-    }
-
-    public void doInitialization() {
-        // connect to router - stores ID that is given
-
     }
 
     public boolean getInitialization() {

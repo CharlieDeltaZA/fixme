@@ -1,7 +1,39 @@
 package com.fixme.router;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.ServerSocket;
+import java.net.Socket;
+
 public class Executor {
 
+    // open server for brokers
+    // new broker added to executor thread -> given an ID (hand shake happens)
+    //                                     -> buy/sell msg sent to market
+    //                                     -> sends outcome msg to broker
+    public Executor() {
+        try (
+            ServerSocket serverSocket = new ServerSocket(5000);
+            Socket brokerSocket = serverSocket.accept();
+
+            PrintWriter out = new PrintWriter(brokerSocket.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(new InputStreamReader(brokerSocket.getInputStream()));
+        ) {
+            String inputLine;
+
+            while ((inputLine = in.readLine()) != null) {
+                if (inputLine.equals("Broker Connecting")) {
+                    out.println("Give the broker a unique ID");
+                }
+                // else if (inputLine = a fix msg) { then queue it in thread and send to market }
+            }
+        } catch (
+                IOException e) {
+            System.out.println("IOException: " + e);
+        }
+    }
 
 //    CachedThreadPool:
 //    This thread pool is mostly used where there are lots of short-lived parallel tasks to be executed.
