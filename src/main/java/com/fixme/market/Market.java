@@ -30,7 +30,7 @@ public class Market {
 
                 String fromServer;
                 while ((fromServer = in.readLine()) != null) {
-                    System.out.println("Server: " + fromServer);
+                    System.out.println("Received from router: " + fromServer);
                     // awaits messages from router
                     // does order of buy/sell
                     // returns outcome of order to router

@@ -16,7 +16,7 @@ public class Business {
     private static final String ANSI_RED = "\u001B[31m";
     private static final String ANSI_GREEN = "\u001B[32m";
     private static final String ANSI_CYAN = "\u001B[36m";
-    private static int ID;
+    private int ID;
     Socket bSock;
     PrintWriter out;
     BufferedReader in;
@@ -32,9 +32,7 @@ public class Business {
 
             String fromServer;
             while ((fromServer = in.readLine()) != null) {
-                System.out.println("Server: " + fromServer); // debugging
-                // check for ID return from router
-                // assign ID
+                this.ID = Integer.parseInt(fromServer);
                 break;
             }
         } catch (UnknownHostException e) {

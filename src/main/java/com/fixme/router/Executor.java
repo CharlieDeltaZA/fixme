@@ -6,14 +6,23 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 
 public class Executor {
+
+    private final ArrayList brokers;
+    private final ArrayList markets;
+
+    public Executor(ArrayList brokers, ArrayList markets) {
+        this.brokers = brokers;
+        this.markets = markets;
+    }
 
     // open server for brokers
     // new broker added to executor thread -> given an ID (hand shake happens)
     //                                     -> buy/sell msg sent to market
     //                                     -> sends outcome msg to broker
-    public Executor() {
+    public void openServer() {
         try (
             ServerSocket serverSocket = new ServerSocket(5000);
             Socket brokerSocket = serverSocket.accept();
@@ -25,7 +34,11 @@ public class Executor {
 
             while ((inputLine = in.readLine()) != null) {
                 if (inputLine.equals("Broker Connecting")) {
-                    out.println("Give the broker a unique ID");
+                    Generator genny = new Generator(markets, brokers);
+                    int ID = genny.genBrokerID();
+                    brokers.add(ID);
+                    System.out.println("Added New Broker: " + ID);
+                    out.println(ID);
                 }
                 // else if (inputLine = a fix msg) { then queue it in thread and send to market }
             }
