@@ -13,15 +13,17 @@ public class Router {
     public static void main(String[] args) {
         final ArrayList markets = new ArrayList();
         final ArrayList brokers = new ArrayList();
+        PrintWriter out;
+        BufferedReader in;
 
         // open market server
-        try (
+        try {
             ServerSocket serverSocket = new ServerSocket(5001);
             Socket marketSocket = serverSocket.accept();
 
-            PrintWriter out = new PrintWriter(marketSocket.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(new InputStreamReader(marketSocket.getInputStream()));
-        ) {
+            out = new PrintWriter(marketSocket.getOutputStream(), true);
+            in = new BufferedReader(new InputStreamReader(marketSocket.getInputStream()));
+
             String inputLine;
 
             while ((inputLine = in.readLine()) != null) {
@@ -29,15 +31,15 @@ public class Router {
                     Generator genny = new Generator(markets, brokers);
                     int ID = genny.genMarketID();
                     markets.add(ID);
-                    System.out.println("Added New Market: " + ID);
                     out.println(ID);
+                    System.out.println("Added New Market: " + ID);
+
+                    // construct executor class
+                    Executor brokerExec = new Executor(brokers, markets, in, out);
+                    brokerExec.openServer();
                     break;
                 }
             }
-
-            // construct executor class
-            Executor brokerExec = new Executor(brokers, markets);
-            brokerExec.openServer();
         } catch (IOException e) {
             System.out.println("IOException: " + e);
         }

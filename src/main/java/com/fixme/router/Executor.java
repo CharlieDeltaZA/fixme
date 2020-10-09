@@ -12,10 +12,14 @@ public class Executor {
 
     private final ArrayList brokers;
     private final ArrayList markets;
+    private final PrintWriter marketOut;
+    private final BufferedReader marketIn;
 
-    public Executor(ArrayList brokers, ArrayList markets) {
+    public Executor(ArrayList brokers, ArrayList markets, BufferedReader marketIn, PrintWriter marketOut) {
         this.brokers = brokers;
         this.markets = markets;
+        this.marketIn = marketIn;
+        this.marketOut = marketOut;
     }
 
     // open server for brokers
@@ -34,13 +38,19 @@ public class Executor {
 
             while ((inputLine = in.readLine()) != null) {
                 if (inputLine.equals("Broker Connecting")) {
+
+                    // queue broker into thread
+                    // do the following per thread in queue:
+                    
                     Generator genny = new Generator(markets, brokers);
                     int ID = genny.genBrokerID();
                     brokers.add(ID);
                     System.out.println("Added New Broker: " + ID);
                     out.println(ID);
                 }
-                // else if (inputLine = a fix msg) { then queue it in thread and send to market }
+//                else if (inputLine = a fix msg){
+//                    then queue it in thread and send to market
+//                }
             }
         } catch (
                 IOException e) {

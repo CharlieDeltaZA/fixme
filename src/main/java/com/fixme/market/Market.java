@@ -12,6 +12,8 @@ public class Market {
 
     public static void main(String[] args) {
 
+        int ID;
+
         Initialize init = new Initialize();
         ArrayList<Product> products = init.initializeStock();
 
@@ -31,6 +33,7 @@ public class Market {
                 String fromServer;
                 while ((fromServer = in.readLine()) != null) {
                     System.out.println("Received from router: " + fromServer);
+                    ID = Integer.parseInt(fromServer);
                     // awaits messages from router
                     // does order of buy/sell
                     // returns outcome of order to router
