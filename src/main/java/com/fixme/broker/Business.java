@@ -29,22 +29,18 @@ public class Business {
             in = new BufferedReader(new InputStreamReader(bSock.getInputStream()));
 
             out.println("Broker Connecting");
-
-            String fromServer;
-            while ((fromServer = in.readLine()) != null) {
-                this.ID = Integer.parseInt(fromServer);
-                break;
-            }
+            String fromServer = in.readLine();
+            this.ID = Integer.parseInt(fromServer);
         } catch (UnknownHostException e) {
             System.out.println("Unknown host: " + e);
         } catch (IOException e) {
+            System.out.println("Router is not available for communication.");
             System.out.println("IOException: " + e);
         }
     }
 
     private void sendOrder(String[] order) {
         Fix fix = new Fix(order);
-
         String msg = fix.constructFix(ID);
 
         if (msg != null) {
@@ -53,13 +49,11 @@ public class Business {
             try {
                 out.println(msg);
 
-                String fromServer;
-                while ((fromServer = in.readLine()) != null) {
-                    System.out.println("Server: " + fromServer);
-                    // check for FIX msg return from market
-                    // prints results returned
-                    break;
-                }
+                // FIX msg returned from market
+                String fromServer = in.readLine();
+
+                // prints results returned
+                if (fromServer != null) System.out.println("Result: "+fromServer);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -69,18 +63,15 @@ public class Business {
     }
 
     public void takeOrders() {
-        boolean terminate = false;
         Validation validate = new Validation();
         Scanner scan = new Scanner(System.in);
 
-        while (!terminate) {
-
+        while (true) {
             printTakeOrder();
             String line = scan.nextLine();
 
-            if (line.equals("Q")) {
-                terminate = true;
-            } else {
+            if (line.equals("Q")) break;
+            else {
                 while (!(validate.validateInput(line))) {
                     printTakeOrder();
                     line = scan.nextLine();

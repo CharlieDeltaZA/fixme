@@ -13,38 +13,43 @@ public class Market {
     public static void main(String[] args) {
 
         int ID;
-
         Initialize init = new Initialize();
         ArrayList<Product> products = init.initializeStock();
 
         if (products != null) {
-            for (Product item: products) {
+            for (Product item : products) {
                 System.out.println(item.getName() + " " + item.getQuantity() + " " + item.getCost());
-            }
-
-            // establishes connection to router
-            try (
-                Socket mSock = new Socket("localhost", 5001);
-                PrintWriter out = new PrintWriter(mSock.getOutputStream(), true);
-                BufferedReader in = new BufferedReader(new InputStreamReader(mSock.getInputStream()));
-            ) {
-                out.println("Market Connecting");
-
-                String fromServer;
-                while ((fromServer = in.readLine()) != null) {
-                    System.out.println("Received from router: " + fromServer);
-                    ID = Integer.parseInt(fromServer);
-                    // awaits messages from router
-                    // does order of buy/sell
-                    // returns outcome of order to router
-                }
-            } catch (UnknownHostException e) {
-                System.out.println("Unknown host: " + e);
-            } catch (IOException e) {
-                System.out.println("IOException: " + e);
             }
         } else {
             System.out.println("Unable to initialize stock listings, please reboot Market.");
+        }
+
+        // establishes connection to router
+        try (
+            Socket mSock = new Socket("localhost", 5001);
+            PrintWriter out = new PrintWriter(mSock.getOutputStream(), true);
+            BufferedReader in = new BufferedReader(new InputStreamReader(mSock.getInputStream()));
+        ) {
+            out.println("Market Connecting");
+            String fromServer = in.readLine();
+            ID = Integer.parseInt(fromServer);
+
+            // awaits messages from router
+            while (true) {
+                fromServer = in.readLine();
+                System.out.println("Received from router: " + fromServer);
+
+                // does order of buy/sell
+                //make function to parse input
+
+                // returns outcome of order to router
+                out.println();
+            }
+        } catch (UnknownHostException e) {
+            System.out.println("Unknown host: " + e);
+        } catch (IOException e) {
+            System.out.println("Router is not available for communication.");
+            System.out.println("IOException: " + e);
         }
     }
 }
