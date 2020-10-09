@@ -10,7 +10,7 @@ TBC/25
 #### Project Overview:
 3rd Java project @ WeThinkCode_
 
-Summary: A stock exchange simulaNon using trading algorithms, networking and socket implementaNons
+Summary: A stock exchange simulatio using trading algorithms, networking and socket implementations
 
 ### Installing & Running:
 Ensure you have the latest JRE & JDK (14 at time of development), as well as Maven.
