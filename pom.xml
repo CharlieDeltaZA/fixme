@@ -5,11 +5,11 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.fixme</groupId>
+    <groupId>fixme</groupId>
     <artifactId>fixme</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0</version>
-    <build>
+    <!-- <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -20,7 +20,7 @@
                 </configuration>
             </plugin>
         </plugins>
-    </build>
+    </build> -->
 
     <modules>
         <module>broker</module>

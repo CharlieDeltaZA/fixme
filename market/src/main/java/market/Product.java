@@ -1,4 +1,4 @@
-package com.fixme.market;
+package market;
 
 public class Product {
 

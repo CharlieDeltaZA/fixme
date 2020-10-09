@@ -1,4 +1,4 @@
-package com.fixme.broker;
+package broker;
 
 public class Validation {
 
