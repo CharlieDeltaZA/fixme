@@ -7,10 +7,16 @@
 
     <groupId>com.fixme</groupId>
     <artifactId>fixme</artifactId>
-    <packaging>jar</packaging>
+    <packaging>pom</packaging>
     <version>1.0.0</version>
 
-    <dependencies>
+    <modules>
+        <module>broker</module>
+        <module>router</module>
+        <module>market</module>
+    </modules>
+
+    <!-- <dependencies>
         <dependency>
             <groupId>javax.validation</groupId>
             <artifactId>validation-api</artifactId>
@@ -47,14 +53,14 @@
             <version>RELEASE</version>
             <scope>compile</scope>
         </dependency>
-    </dependencies>
+    </dependencies> -->
 
     <!-- <properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties> -->
 
-    <build>
+    <!-- <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -99,6 +105,6 @@
                 </configuration>
             </plugin>
         </plugins>
-    </build>
+    </build> -->
 
 </project>
