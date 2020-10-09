@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 public class Initialize {
 
-    ArrayList<Product> products = new ArrayList<>();
+    private final ArrayList<Product> products = new ArrayList<>();
 
     public ArrayList<Product> initializeStock() {
 
