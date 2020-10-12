@@ -72,6 +72,7 @@ public class Fix {
         String qty = arr[4] + "|";
         String money = arr[5] + "|";
 
+        // checksum validation
         try {
             String[] chArr = {qry, obj, qty, money};
 

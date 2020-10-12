@@ -8,10 +8,9 @@ import java.util.ArrayList;
 
 public class Initialize {
 
-    private final ArrayList<Product> products = new ArrayList<>();
+    private ArrayList<Product> products = new ArrayList<>();
 
-    public ArrayList<Product> initializeStock() {
-
+    public Initialize() {
         String line;
 
         try {
@@ -33,7 +32,6 @@ public class Initialize {
         } catch (IOException e) {
             System.out.println("Unable to read from stocks.txt");
         }
-        return products;
     }
 
     private void populateProduct(String[] product) {
@@ -49,5 +47,13 @@ public class Initialize {
         } catch (NullPointerException e) {
             System.out.println("Null pointer err -> Initialize.java -> populateProduct(): " + e);
         }
+    }
+
+    public void setProducts(ArrayList<Product> products) {
+        this.products = products;
+    }
+
+    public ArrayList<Product> getProducts() {
+        return products;
     }
 }

@@ -1,7 +1,5 @@
 package broker;
 
-// import com.fixme.Fix;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -33,9 +31,11 @@ public class Business {
             this.ID = Integer.parseInt(fromServer);
         } catch (UnknownHostException e) {
             System.out.println("Unknown host: " + e);
+            System.exit(1);
         } catch (IOException e) {
             System.out.println("Router is not available for communication.");
             System.out.println("IOException: " + e);
+            System.exit(1);
         }
     }
 
@@ -53,7 +53,8 @@ public class Business {
                 String fromServer = in.readLine();
 
                 // prints results returned
-                if (fromServer != null) System.out.println("Result: "+fromServer);
+                if (fromServer != null) System.out.println("Result: " + fromServer);
+                else System.out.println("The result from the server was unidentifiable.");
             } catch (IOException e) {
                 e.printStackTrace();
             }

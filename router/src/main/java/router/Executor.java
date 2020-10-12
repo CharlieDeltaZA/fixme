@@ -10,14 +10,11 @@ import java.util.ArrayList;
 
 public class Executor {
 
-    private final ArrayList brokers;
-    private final ArrayList markets;
+    private final ArrayList<Integer> brokers = new ArrayList();
     private final PrintWriter marketOut;
     private final BufferedReader marketIn;
 
-    public Executor(ArrayList brokers, ArrayList markets, BufferedReader marketIn, PrintWriter marketOut) {
-        this.brokers = brokers;
-        this.markets = markets;
+    public Executor(BufferedReader marketIn, PrintWriter marketOut) {
         this.marketIn = marketIn;
         this.marketOut = marketOut;
     }
@@ -29,46 +26,42 @@ public class Executor {
     public void openServer() {
         try (
             ServerSocket serverSocket = new ServerSocket(5000);
-            Socket brokerSocket = serverSocket.accept();
-
-            PrintWriter out = new PrintWriter(brokerSocket.getOutputStream(), true);
-            BufferedReader in = new BufferedReader(new InputStreamReader(brokerSocket.getInputStream()));
         ) {
-            String inputLine;
+            FixValidation fix = new FixValidation();
 
-            while ((inputLine = in.readLine()) != null) {
-                if (inputLine.equals("Broker Connecting")) {
+            while (true) {
+                Socket broker = serverSocket.accept();
+                Generator genny = new Generator();
+                int ID = genny.genBrokerID(brokers);
+                brokers.add(ID);
 
-                    // queue broker into thread
-                    // do the following per thread in queue:
-                    
-                    Generator genny = new Generator(markets, brokers);
-                    int ID = genny.genBrokerID();
-                    brokers.add(ID);
-                    System.out.println("Added New Broker: " + ID);
-                    out.println(ID);
+
+
+                //// new thread here: (add above id, brokerSocket, marketIn and marketOut into thread class) //////
+
+                PrintWriter brokerOut = new PrintWriter(broker.getOutputStream(), true);
+                BufferedReader brokerIn = new BufferedReader(new InputStreamReader(broker.getInputStream()));
+
+                brokerOut.println(ID);
+                System.out.println("Added New Broker: " + ID);
+
+                String orderMsg = brokerIn.readLine();
+
+                if (fix.validateFix(orderMsg)) {
+                    marketOut.println(orderMsg);
+                    String marketRet = marketIn.readLine();
+
+                    brokerOut.println(marketRet);
                 }
-//                else if (inputLine = a fix msg){
-//                    then queue it in thread and send to market
-//                }
+                else brokerOut.println("Formatting Error!");
+
+                //// end of thread content. //////////////////////
+
+
+
             }
-        } catch (
-                IOException e) {
+        } catch (IOException e) {
             System.out.println("IOException: " + e);
         }
     }
-
-//    CachedThreadPool:
-//    This thread pool is mostly used where there are lots of short-lived parallel tasks to be executed.
-//    Unlike the fixed thread pool, the number of threads of this executor pool is not bounded.
-//    If all the threads are busy executing some tasks and a new task comes, the pool will create and add
-//    a new thread to the executor. As soon as one of the threads becomes free, it will take up the execution
-//    of the new tasks. If a thread remains idle for sixty seconds, they are terminated and removed from cache.
-//
-//    However, if not managed correctly, or the tasks are not short-lived, the thread pool will have lots of
-//    live threads. This may lead to resource thrashing and hence performance drop.
-//
-//    ExecutorService executorService = Executors.newCachedThreadPool();
-
-//    https://stackabuse.com/concurrency-in-java-the-executor-framework/#:~:text=To%20use%20the%20Executor%20Framework,results%20from%20the%20thread%20pool.
 }

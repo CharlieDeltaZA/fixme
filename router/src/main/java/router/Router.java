@@ -11,31 +11,34 @@ import java.util.ArrayList;
 public class Router {
 
     public static void main(String[] args) {
-        final ArrayList markets = new ArrayList();
-        final ArrayList brokers = new ArrayList();
-        PrintWriter out;
-        BufferedReader in;
+        final ArrayList<Integer> markets = new ArrayList();
+        PrintWriter marketOut;
+        BufferedReader marketIn;
 
         // open market server
         try {
             ServerSocket serverSocket = new ServerSocket(5001);
             Socket marketSocket = serverSocket.accept();
 
-            out = new PrintWriter(marketSocket.getOutputStream(), true);
-            in = new BufferedReader(new InputStreamReader(marketSocket.getInputStream()));
+            marketOut = new PrintWriter(marketSocket.getOutputStream(), true);
+            marketIn = new BufferedReader(new InputStreamReader(marketSocket.getInputStream()));
 
             String inputLine;
 
-            while ((inputLine = in.readLine()) != null) {
+            // will break when the executor class is done
+            while (true) {
+                inputLine = marketIn.readLine();
+
                 if (inputLine.equals("Market Connecting")) {
-                    Generator genny = new Generator(markets, brokers);
+                    Generator genny = new Generator();
                     int ID = genny.genMarketID();
                     markets.add(ID);
-                    out.println(ID);
+                    marketOut.println(ID);
+
                     System.out.println("Added New Market: " + ID);
 
                     // construct executor class
-                    Executor brokerExec = new Executor(brokers, markets, in, out);
+                    Executor brokerExec = new Executor(marketIn, marketOut);
                     brokerExec.openServer();
                     break;
                 }

@@ -6,26 +6,20 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
 
 public class Market {
 
     public static void main(String[] args) {
 
         int ID;
-        Initialize init = new Initialize();
-        ArrayList<Product> products = init.initializeStock();
+        Initialize stock = new Initialize();
 
-        if (products != null) {
-            for (Product item : products) {
-                System.out.println(item.getName() + " " + item.getQuantity() + " " + item.getCost());
-            }
-        } else {
-            System.out.println("Unable to initialize stock listings, please reboot Market.");
-        }
+        if (stock.getProducts().size() > 0) {
+            for (Product item : stock.getProducts()) System.out.println(item.getName() + " " + item.getQuantity() + " " + item.getCost());
+        } else System.out.println("Unable to initialize stock listings, please reboot Market.");
 
-        // establishes connection to router
         try (
+            // establishes connection to router
             Socket mSock = new Socket("localhost", 5001);
             PrintWriter out = new PrintWriter(mSock.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(mSock.getInputStream()));
@@ -33,17 +27,23 @@ public class Market {
             out.println("Market Connecting");
             String fromServer = in.readLine();
             ID = Integer.parseInt(fromServer);
+            System.out.println("ID received: " + ID);
 
             // awaits messages from router
             while (true) {
                 fromServer = in.readLine();
-                System.out.println("Received from router: " + fromServer);
 
-                // does order of buy/sell
-                //make function to parse input
+                if (fromServer != null) {
+                    System.out.println("Received from router: " + fromServer);
 
-                // returns outcome of order to router
-                out.println();
+                    // constructs order into readable format
+                    Order order = new Order();
+                    order.constructOrder(fromServer);
+                    String outcome =  order.doOrder(stock);
+
+                    // returns outcome of the order to router
+                    out.println(outcome);
+                }
             }
         } catch (UnknownHostException e) {
             System.out.println("Unknown host: " + e);
