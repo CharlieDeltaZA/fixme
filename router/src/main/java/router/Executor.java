@@ -45,15 +45,21 @@ public class Executor {
                 brokerOut.println(ID);
                 System.out.println("Added New Broker: " + ID);
 
-                String orderMsg = brokerIn.readLine();
+                while (true) {
+                    String orderMsg = brokerIn.readLine();
 
-                if (fix.validateFix(orderMsg)) {
-                    marketOut.println(orderMsg);
-                    String marketRet = marketIn.readLine();
+                    if (orderMsg == null) break;  // dunno if this is the correct case
 
-                    brokerOut.println(marketRet);
+                    if (fix.validateFix(orderMsg)) {
+                        marketOut.println(orderMsg);
+                        String marketRet = marketIn.readLine();
+
+                        brokerOut.println(marketRet);
+                    }
+                    else brokerOut.println("Formatting Error!");
                 }
-                else brokerOut.println("Formatting Error!");
+                broker.close();  // need to check if this is correct to do
+                // stop thread or whatever you using here
 
                 //// end of thread content. //////////////////////
 
