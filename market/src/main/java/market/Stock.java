@@ -6,11 +6,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Initialize {
+public class Stock {
 
     private ArrayList<Product> products = new ArrayList<>();
 
-    public Initialize() {
+    public Stock() {
         String line;
 
         try {
@@ -43,14 +43,16 @@ public class Initialize {
             item.setCost(Integer.parseInt(product[2]));
             this.products.add(item);
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("Index err -> Initialize.java -> populateProduct(): " + e);
+            System.out.println("Index err -> Stock.java -> populateProduct(): " + e);
         } catch (NullPointerException e) {
-            System.out.println("Null pointer err -> Initialize.java -> populateProduct(): " + e);
+            System.out.println("Null pointer err -> Stock.java -> populateProduct(): " + e);
         }
     }
 
-    public void setProducts(ArrayList<Product> products) {
+    public boolean saveProducts(ArrayList<Product> products) {
         this.products = products;
+        // THIS WILL SAVE PRODUCTS TO FILE /////////////////////////////
+        return true;
     }
 
     public ArrayList<Product> getProducts() {

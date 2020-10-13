@@ -1,5 +1,7 @@
 package market;
 
+import market.order.Order;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -12,7 +14,7 @@ public class Market {
     public static void main(String[] args) {
 
         int ID;
-        Initialize stock = new Initialize();
+        Stock stock = new Stock();
 
         if (stock.getProducts().size() > 0) {
             for (Product item : stock.getProducts()) System.out.println(item.getName() + " " + item.getQuantity() + " " + item.getCost());
@@ -38,7 +40,7 @@ public class Market {
 
                     // constructs order into readable format
                     Order order = new Order();
-                    order.constructOrder(fromServer);
+                    order.constructOrder(fromServer, ID);
                     String outcome =  order.doOrder(stock);
 
                     // returns outcome of the order to router
