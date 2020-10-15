@@ -27,13 +27,22 @@ public class Available implements Chain {
     private boolean productAvailable(Stock products, ArrayList<String> order) {
         ArrayList<Product> stock = products.getProducts();
         String orderProd = order.get(2);
+        String command = order.get(1).toLowerCase();
         boolean found = false;
 
         for (Product product : stock) {
-            if (product.getName().equalsIgnoreCase(orderProd) && product.getQuantity() > 0) {
-                found = true;
-                break;
+            if (command.equals("buy")) {
+                if (product.getName().equalsIgnoreCase(orderProd) && product.getQuantity() > 0) {
+                    found = true;
+                    break;
+                }
+            } else {
+                if (product.getName().equalsIgnoreCase(orderProd)) {
+                    found = true;
+                    break;
+                }
             }
+
         }
 
         return found;
