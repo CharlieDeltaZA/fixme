@@ -55,10 +55,10 @@ public class Executor {
                         marketOut.println(orderMsg);
                         String marketRet = marketIn.readLine();
 
-                        // add fix validation for incoming messages from market
-                        brokerOut.println(marketRet);
+                        if (fix.validateFix(marketRet)) brokerOut.println(marketRet);
+                        else brokerOut.println("Formatting Error - Market Message!");
                     }
-                    else brokerOut.println("Formatting Error!");
+                    else brokerOut.println("Formatting Error - Order Message!");
                 }
 
             } catch (Exception e) {
