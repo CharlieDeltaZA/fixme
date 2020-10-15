@@ -71,8 +71,15 @@ public class Business {
             printTakeOrder();
             String line = scan.nextLine();
 
-            if (line.equalsIgnoreCase("Q")) break;
-            else {
+            if (line.equalsIgnoreCase("Q")) {
+                try {
+                    bSock.close();
+                } catch (IOException e) {
+                    System.out.println("Broker " + this.ID + "threw IOException.");
+                    e.printStackTrace();
+                }
+                break;
+            } else {
                 while (!(validate.validateInput(line))) {
                     printTakeOrder();
                     line = scan.nextLine();
