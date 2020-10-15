@@ -27,7 +27,7 @@ public class Executor {
     }
     
     private class BrokerHandler implements Runnable {
-        private Socket broker;
+        private final Socket broker;
         
         public BrokerHandler(Socket socket) {
             this.broker = socket;
@@ -49,12 +49,13 @@ public class Executor {
                 while (true) {
                     String orderMsg = brokerIn.readLine();
     
-                    if (orderMsg == null) break;  // dunno if this is the correct case
+                    if (orderMsg == null) break;
     
                     if (fix.validateFix(orderMsg)) {
                         marketOut.println(orderMsg);
                         String marketRet = marketIn.readLine();
-    
+
+                        // add fix validation for incoming messages from market
                         brokerOut.println(marketRet);
                     }
                     else brokerOut.println("Formatting Error!");
@@ -84,9 +85,7 @@ public class Executor {
             System.out.println("Broker listening on port " + serverSocket.getLocalPort());
             pool = Executors.newFixedThreadPool(8);
 
-            while (true) {
-                pool.execute(new BrokerHandler(serverSocket.accept()));
-            }
+            while (true) pool.execute(new BrokerHandler(serverSocket.accept()));
         } catch (IOException e) {
             System.out.println("IOException: " + e);
         }
