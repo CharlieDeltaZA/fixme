@@ -30,7 +30,7 @@ public class Available implements Chain {
         boolean found = false;
 
         for (Product product : stock) {
-            if (product.getName().equalsIgnoreCase(orderProd)) {
+            if (product.getName().equalsIgnoreCase(orderProd) && product.getQuantity() > 0) {
                 found = true;
                 break;
             }
