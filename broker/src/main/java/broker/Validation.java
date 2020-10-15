@@ -15,7 +15,7 @@ public class Validation {
                 System.out.println(ANSI_RED + "Incorrect format! Incorrect number of parameters.\n" + ANSI_RESET);
                 return false;
             }
-            if (!arr[0].trim().equals("Sell") && !arr[0].trim().equals("Buy")) {
+            if (!arr[0].trim().equalsIgnoreCase("Sell") && !arr[0].trim().equalsIgnoreCase("Buy")) {
                 System.out.println(ANSI_RED + "Incorrect format! Invalid 'Buy' or 'Sell' parameter.\n" + ANSI_RESET);
                 return false;
             }
