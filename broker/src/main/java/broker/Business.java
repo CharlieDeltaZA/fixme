@@ -26,7 +26,6 @@ public class Business {
             out = new PrintWriter(bSock.getOutputStream(), true);
             in = new BufferedReader(new InputStreamReader(bSock.getInputStream()));
 
-            out.println("Broker Connecting");
             String fromServer = in.readLine();
             this.ID = Integer.parseInt(fromServer);
         } catch (UnknownHostException e) {
@@ -44,7 +43,7 @@ public class Business {
         String msg = fix.constructFix(ID);
 
         if (msg != null) {
-            System.out.println(msg); // debugging
+            System.out.println("\nOrder: " + msg);
 
             try {
                 out.println(msg);
@@ -53,8 +52,8 @@ public class Business {
                 String fromServer = in.readLine();
 
                 // prints results returned
-                if (fromServer != null) System.out.println("Result: " + fromServer);
-                else System.out.println("The result from the server was unidentifiable.");
+                if (fromServer != null) System.out.println("Result: " + fromServer + "\n");
+                else System.out.println("The result from the server was unidentifiable.\n");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -105,8 +104,6 @@ public class Business {
 
     private void printTakeOrder() {
         System.out.println("You can provide a buy or sell order in the following format: (Enter 'Q' to quit session)");
-        System.out.println(ANSI_CYAN + "Buy - Object - Quantity - Funds Available" + ANSI_RESET);
-        System.out.println("OR");
-        System.out.println(ANSI_CYAN + "Sell - Object - Quantity - Selling Price Per Object" + ANSI_RESET);
+        System.out.println(ANSI_CYAN + "Buy - Object - Quantity - Funds Available" + ANSI_RESET + " OR " + ANSI_CYAN + "Sell - Object - Quantity - Selling Price Per Object" + ANSI_RESET);
     }
 }

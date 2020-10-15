@@ -36,6 +36,7 @@ public class Executor {
         @Override
         public void run() {
             System.out.println("Broker Connected!");
+
             try {
                 int ID = genny.genBrokerID(brokers);
                 brokers.add(ID);
@@ -55,7 +56,7 @@ public class Executor {
                         marketOut.println(orderMsg);
                         String marketRet = marketIn.readLine();
 
-                        if (fix.validateFix(marketRet)) brokerOut.println(marketRet);
+                        if (fix.validateMarketFix(marketRet)) brokerOut.println(marketRet);
                         else brokerOut.println("Formatting Error - Market Message!");
                     }
                     else brokerOut.println("Formatting Error - Order Message!");
