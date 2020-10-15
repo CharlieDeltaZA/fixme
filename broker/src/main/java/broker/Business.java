@@ -71,7 +71,7 @@ public class Business {
             printTakeOrder();
             String line = scan.nextLine();
 
-            if (line.equals("Q")) break;
+            if (line.equalsIgnoreCase("Q")) break;
             else {
                 while (!(validate.validateInput(line))) {
                     printTakeOrder();
@@ -88,12 +88,12 @@ public class Business {
         System.out.println(ANSI_GREEN + "Enter 'C' to connect to the market and 'Q' to quit:" + ANSI_RESET);
         String line = scan.nextLine();
 
-        while (!line.equals("C") && !line.equals("Q")) {
+        while (!line.equalsIgnoreCase("C") && !line.equalsIgnoreCase("Q")) {
             System.out.println(ANSI_RED + "Enter only 'C' or 'Q' as input!" + ANSI_RESET);
             line = scan.nextLine();
         }
 
-        return line.equals("C");
+        return line.equalsIgnoreCase("C");
     }
 
     private void printTakeOrder() {
