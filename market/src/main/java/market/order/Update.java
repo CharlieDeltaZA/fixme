@@ -47,11 +47,6 @@ public class Update implements  Chain{
         return false;
     }
 
-    private boolean updateStock(ArrayList<Product> stock) {
-        // write to file here
-        return true;
-    }
-
     private ArrayList<Product> updateList(ArrayList<Product> stock, Product item) {
         for (int i = 0; i < stock.size(); i++) {
             if (stock.get(i).getName().equalsIgnoreCase(item.getName())) {
