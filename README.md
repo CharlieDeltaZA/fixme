@@ -20,4 +20,22 @@ Build with Maven:
 mvn clean package
 ```
 
-<!-- TODO: Add How to Run -->
+Run as follows (You'll need at least 3 terminal windows). It is possible to have up to 8 Brokers connected at a time.
+
+Start in the following order: Router > Market > Brokers
+
+**Window 1 - Router:**
+```
+cd ./router
+java -jar ./target/router-1.0.0.jar
+```
+**Window 2 - Market:**
+```
+cd ./market
+java -jar ./target/market-1.0.0.jar
+```
+**Window X - Broker(s):**
+```
+cd ./broker
+java -jar ./target/broker-1.0.0.jar
+```
