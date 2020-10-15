@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class Router {
 
     public static void main(String[] args) {
-        final ArrayList<Integer> markets = new ArrayList();
+        final ArrayList<Integer> markets = new ArrayList<>();
         PrintWriter marketOut;
         BufferedReader marketIn;
 
