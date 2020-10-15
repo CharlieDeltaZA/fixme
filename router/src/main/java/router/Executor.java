@@ -81,7 +81,7 @@ public class Executor {
     //                                     -> sends outcome msg to broker
     public void openServer() {
         try (ServerSocket serverSocket = new ServerSocket(5000)) {
-            System.out.println("Broker listening on " + serverSocket.getLocalPort());
+            System.out.println("Broker listening on port " + serverSocket.getLocalPort());
             pool = Executors.newFixedThreadPool(8);
 
             while (true) {
