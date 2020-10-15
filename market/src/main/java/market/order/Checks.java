@@ -16,7 +16,10 @@ public class Checks implements  Chain {
 
     @Override
     public String process(Stock products, ArrayList<String> order, int marketID) {
-        if (extensiveChecks(products, order)) return next.process(products, order, marketID);
+        if (extensiveChecks(products, order)) {
+            System.out.println("Passed 'extensive' checks.");
+            return next.process(products, order, marketID);
+        }
         else return "Rejected";
     }
 

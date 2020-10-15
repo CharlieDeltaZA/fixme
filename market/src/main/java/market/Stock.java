@@ -52,6 +52,7 @@ public class Stock {
     public boolean saveProducts(ArrayList<Product> products) {
         this.products = products;
         // THIS WILL SAVE PRODUCTS TO FILE /////////////////////////////
+        System.out.println("Saved stock to file.");
         return true;
     }
 

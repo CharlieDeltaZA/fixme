@@ -43,6 +43,8 @@ public class Market {
                     order.constructOrder(fromServer, ID);
                     String outcome =  order.doOrder(stock);
 
+                    System.out.println("Sending to router: " + outcome);
+
                     // returns outcome of the order to router
                     out.println(outcome);
                 }

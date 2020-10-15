@@ -16,7 +16,10 @@ public class Update implements  Chain{
 
     @Override
     public String process(Stock products, ArrayList<String> order, int marketID) {
-        if (save(products, order)) return next.process(products, order, marketID);
+        if (save(products, order)) {
+            System.out.println("Updated stock.");
+            return next.process(products, order, marketID);
+        }
         else return "Rejected";
     }
 

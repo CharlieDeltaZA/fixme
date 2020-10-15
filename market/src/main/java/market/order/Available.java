@@ -16,7 +16,10 @@ public class Available implements Chain {
 
     @Override
     public String process(Stock products, ArrayList<String> order, int marketID) {
-        if (productAvailable(products, order)) return next.process(products, order, marketID);
+        if (productAvailable(products, order)) {
+            System.out.println("Passed 'available' check.");
+            return next.process(products, order, marketID);
+        }
         else return "Rejected";
     }
 
