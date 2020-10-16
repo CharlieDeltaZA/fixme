@@ -57,8 +57,11 @@ public class Executor {
                         marketOut.println(orderMsg);
                         String marketRet = marketIn.readLine();
 
-                        if (fix.validateMarketFix(marketRet)) brokerOut.println(marketRet);
-                        else brokerOut.println("Formatting Error - Market Message!");
+                        int result = fix.validateMarketFix(marketRet);
+
+                        if (result == 1) brokerOut.println(marketRet);
+                        else if (result == 0) brokerOut.println("Formatting Error - Market Message!");
+                        else if (result == -1) brokerOut.println("The Market might be down, try restarting it!");
                     }
                     else brokerOut.println("Formatting Error - Order Message!");
                 }
@@ -75,7 +78,7 @@ public class Executor {
                 try {
                     broker.close();  // need to check if this is correct to do
                     System.out.println("Broker Closed!");
-                } catch (IOException e) {
+                } catch (IOException | NullPointerException e) {
                     System.out.println("Error closing broker connection.");
                 }
             }
