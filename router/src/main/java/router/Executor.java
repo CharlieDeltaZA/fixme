@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -62,16 +63,21 @@ public class Executor {
                     else brokerOut.println("Formatting Error - Order Message!");
                 }
 
-            } catch (Exception e) {
+            } catch (SocketException e) {
                 System.out.println("Error: " + broker);
-                e.printStackTrace();
-            } finally {
+                System.out.println("Error completing transaction process. Please restart server!");
+                System.exit(1);
+            } catch (IOException e) {
+                System.out.println("Error completing transaction process. Please restart server!");
+                System.exit(1);
+            }
+            finally {
                 try {
                     broker.close();  // need to check if this is correct to do
+                    System.out.println("Broker Closed!");
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    System.out.println("Error closing broker connection.");
                 }
-                System.out.println("Broker Closed!");
             }
         }
 

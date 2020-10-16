@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
@@ -30,10 +29,10 @@ public class Business {
             String fromServer = in.readLine();
             this.ID = Integer.parseInt(fromServer);
         } catch (UnknownHostException e) {
-            System.out.println("Unknown host: " + e);
+            System.out.println(ANSI_RED + "Unknown host: " + e + ANSI_RESET);
             System.exit(1);
         } catch (IOException e) {
-            System.out.println("Router is not available for communication.");
+            System.out.println(ANSI_RED + "Router is not available for communication." + ANSI_RESET);
             System.out.println("IOException: " + e);
             System.exit(1);
         }
@@ -54,12 +53,12 @@ public class Business {
 
                 // prints results returned
                 if (fromServer != null) System.out.println("Result: " + fromServer + "\n");
-                else System.out.println("The result from the server was unidentifiable.\n");
+                else System.out.println(ANSI_RED + "The result from the market was unidentifiable. Please try again later!\n" + ANSI_RESET);
             } catch (IOException e) {
-                System.out.println("\nUnable to communicate with the server. Please try again!\n");
+                System.out.println(ANSI_RED + "\nUnable to communicate with the server. Please try again!\n" + ANSI_RESET);
             }
         } else {
-            System.out.println("FIX message could not be created! Please try again.");
+            System.out.println(ANSI_RED + "FIX message could not be created! Please try again." + ANSI_RESET);
         }
     }
 
@@ -75,7 +74,7 @@ public class Business {
                 try {
                     bSock.close();
                 } catch (IOException e) {
-                    System.out.println("Broker " + this.ID + "threw IOException.");
+                    System.out.println(ANSI_RED + "Broker " + this.ID + "threw IOException." + ANSI_RESET);
                     e.printStackTrace();
                 }
                 break;
