@@ -10,12 +10,13 @@ public class FixValidation {
 
         if (arr.length < 7) return false;
 
-        String qry = arr[2] + "|";
-        String obj = arr[3] + "|";
-        String qty = arr[4] + "|";
-        String money = arr[5] + "|";
-
+        
         try {
+            String qry = arr[2] + "|";
+            String obj = arr[3] + "|";
+            String qty = arr[4] + "|";
+            String money = arr[5] + "|";
+
             String[] chArr = {qry, obj, qty, money};
 
             for (String s : chArr) {
@@ -34,22 +35,24 @@ public class FixValidation {
         return result == Integer.parseInt(checksum);
     }
 
-    public boolean validateMarketFix(String msg) {
-        String[] arr = msg.split("\\|");
+    public int validateMarketFix(String msg) {
         String checksum = "";
         int result = 0;
         int total = 0;
-
-        if (arr.length < 9) return false;
-
-        String brokerID = arr[2] + "|";
-        String qry = arr[3] + "|";
-        String obj = arr[4] + "|";
-        String qty = arr[5] + "|";
-        String money = arr[6] + "|";
-        String outcome = arr[7] + "|";
-
+        
+        if (msg == null) return (-1);
+        
         try {
+            String[] arr = msg.split("\\|");
+            if (arr.length < 9) return 0;
+            
+            String brokerID = arr[2] + "|";
+            String qry = arr[3] + "|";
+            String obj = arr[4] + "|";
+            String qty = arr[5] + "|";
+            String money = arr[6] + "|";
+            String outcome = arr[7] + "|";
+
             String[] chArr = {qry, obj, qty, money, brokerID, outcome};
 
             for (String s : chArr) {
@@ -60,11 +63,17 @@ public class FixValidation {
             result = total % 256;
             checksum = msg.split("\\|")[8].split("=")[1];
 
+            int res = 0;
+            if (result == Integer.parseInt(checksum)) res = 1;
+            
+            return res;
         } catch (NullPointerException e) {
-            System.out.println("Null pointer err -> FixValidation.java -> validateFix(): " + e);
+            System.out.println("Null pointer err -> FixValidation.java -> validateMarketFix(): " + e);
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("Index err -> FixValidation.java -> validateFix(): " + e);
+            System.out.println("Index err -> FixValidation.java -> validateMarketFix(): " + e);
+        } catch (NumberFormatException e) {
+            System.out.println("Number Format err -> FixValidation.java -> validateMarketFix(): " + e);
         }
-        return result == Integer.parseInt(checksum);
+        return 0;
     }
 }
