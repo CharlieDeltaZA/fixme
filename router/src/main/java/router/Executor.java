@@ -76,7 +76,7 @@ public class Executor {
             }
             finally {
                 try {
-                    broker.close();  // need to check if this is correct to do
+                    broker.close();
                     System.out.println("Broker Closed!");
                 } catch (IOException | NullPointerException e) {
                     System.out.println("Error closing broker connection.");
