@@ -19,16 +19,24 @@ public class Validation {
                 System.out.println(ANSI_RED + "Incorrect format! Invalid 'Buy' or 'Sell' parameter.\n" + ANSI_RESET);
                 return false;
             }
+            if (Integer.parseInt(arr[2].trim()) <= 0) {
+                System.out.println(ANSI_RED + "Invalid quantity! Please ensure you make an order for a quantity above 0.\n" + ANSI_RESET);
+                return false;
+            }
+            if (Integer.parseInt(arr[3].trim()) <= 0) {
+                System.out.println(ANSI_RED + "Invalid funds amount! Please ensure you make an order with funds above 0.\n" + ANSI_RESET);
+                return false;
+            }
             if (!validateString(arr[1].trim()) || !validateNumber(arr[2].trim()) || !validateNumber(arr[3].trim())) {
                 System.out.println(ANSI_RED + "Incorrect format! Please pay attention to what must be digits or characters only.\n" + ANSI_RESET);
                 return false;
             }
             return true;
         } catch (NullPointerException e) {
-            System.out.println("Null pointer err -> Business.java -> validateInput(): " + e);
+            System.out.println("Null pointer err -> Validation.java -> validateInput(): " + e);
             return false;
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("Index err -> Business.java -> validateInput(): " + e);
+            System.out.println("Index err -> Validation.java -> validateInput(): " + e);
             return false;
         }
     }
