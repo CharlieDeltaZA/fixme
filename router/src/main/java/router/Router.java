@@ -18,7 +18,11 @@ public class Router {
         // open market server
         try {
             ServerSocket serverSocket = new ServerSocket(5001);
+            System.out.println("Waiting for a market to connect...");
+
             Socket marketSocket = serverSocket.accept();
+
+            System.out.println("Market connected!");
 
             marketOut = new PrintWriter(marketSocket.getOutputStream(), true);
             marketIn = new BufferedReader(new InputStreamReader(marketSocket.getInputStream()));
