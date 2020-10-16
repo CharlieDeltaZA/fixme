@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
@@ -55,7 +56,7 @@ public class Business {
                 if (fromServer != null) System.out.println("Result: " + fromServer + "\n");
                 else System.out.println("The result from the server was unidentifiable.\n");
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("\nUnable to communicate with the server. Please try again!\n");
             }
         } else {
             System.out.println("FIX message could not be created! Please try again.");

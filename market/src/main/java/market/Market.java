@@ -16,9 +16,11 @@ public class Market {
         int ID;
         Stock stock = new Stock();
 
+        System.out.println("Stock -> Products available: " + stock.getProducts().size());
         if (stock.getProducts().size() > 0) {
             for (Product item : stock.getProducts()) System.out.println(item.getName() + " " + item.getQuantity() + " " + item.getCost());
         } else System.out.println("Unable to initialize stock listings, please reboot Market.");
+        System.out.println("\n");
 
         try (
             // establishes connection to router
