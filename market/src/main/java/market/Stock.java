@@ -1,9 +1,6 @@
 package market;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 public class Stock {
@@ -51,9 +48,20 @@ public class Stock {
 
     public boolean saveProducts(ArrayList<Product> products) {
         this.products = products;
-        // THIS WILL SAVE PRODUCTS TO FILE /////////////////////////////
-        System.out.println("Saved stock to file.");
-        return true;
+        String line = "";
+
+        for (Product prod: products) line += prod.getName() + ":" + prod.getQuantity() + ":" + prod.getCost() + "\n";
+
+        try {
+            FileWriter fw = new FileWriter("stocks.txt");
+            fw.write(line);
+            fw.close();
+            System.out.println("Saved stock to file.");
+            return true;
+        } catch (IOException e) {
+            System.out.print("Error while saving to stocks.txt -> Stock.java -> saveProducts(): " + e);
+        }
+        return false;
     }
 
     public ArrayList<Product> getProducts() {
