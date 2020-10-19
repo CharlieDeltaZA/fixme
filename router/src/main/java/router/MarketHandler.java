@@ -48,6 +48,7 @@ public class MarketHandler implements Runnable {
         public void run() {
             // TODO Auto-generated method stub
             String inputLine;
+            int ID = -1;
             System.out.println("Market connected!");
 
             try {
@@ -58,7 +59,7 @@ public class MarketHandler implements Runnable {
                     inputLine = marketIn.readLine();
     
                     if (inputLine.equals("Market Connecting")) {
-                        int ID = genny.genMarketID();
+                        ID = genny.genMarketID();
                         // markets.add(ID);
                         Router.addNewMarket(new router.SomeName(ID, marketOut, marketIn)); //LOGIC REQUIRED
                         marketOut.println(ID);
@@ -74,9 +75,20 @@ public class MarketHandler implements Runnable {
                         Router.messageBroker(inputLine);
                     }
                 }
-            } catch (IOException e) {
+            } catch (IOException | NullPointerException e) {
                 //TODO Handle
+                System.out.println("Hey, you found an unhandled exception!");
                 e.printStackTrace();
+            } finally {
+                try {
+                    socket.close();
+                    System.out.println("Market Closed!");
+                } catch (IOException | NullPointerException e) {
+                    System.out.println("Error closing market connection.");
+                }
+                // remove ID from arraylist
+                // brokers.remove(ID);
+                Router.removeMarket(ID);
             }
 
 

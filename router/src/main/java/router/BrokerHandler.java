@@ -72,16 +72,11 @@ public class BrokerHandler implements Runnable {
                         // marketOut.println(orderMsg);
                         Router.messageMarket(orderMsg);
 
-                        // PROBLEM HERE - Code needs to pause until the router run stuff completes. :(
-
-                        // String marketRet = marketIn.readLine(); //???????
+                        // String marketRet = marketIn.readLine();
 
                         // Send order to market, via router:
                         // THEN - let market do it's thing and call send2Broker
                         // Validate the marketRet msg in send2Broker, then send it off appropriately
-
-
-                        // String marketRet = "InvalidFixMsg";
 
                         // int result = fix.validateMarketFix(marketRet);
 
@@ -99,8 +94,7 @@ public class BrokerHandler implements Runnable {
             } catch (IOException e) {
                 System.out.println("Error completing transaction process. Please restart server!");
                 System.exit(1);
-            }
-            finally {
+            } finally {
                 try {
                     socket.close();
                     System.out.println("Broker Closed!");

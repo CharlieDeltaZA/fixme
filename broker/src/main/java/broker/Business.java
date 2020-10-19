@@ -49,10 +49,7 @@ public class Business {
                 out.println(msg);
 
                 // FIX msg returned from market
-                System.out.println("We're waiting for a return message!");
-                // PROBLEM BELOW - Not waiting for return from router message func
                 String fromServer = in.readLine();
-                System.out.println("fromServer: " +fromServer);
 
                 // prints results returned
                 if (fromServer != null) System.out.println("Result: " + fromServer + "\n");

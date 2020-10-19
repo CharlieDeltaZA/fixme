@@ -33,8 +33,9 @@ public class Router {
             }
 
 
-        } catch (IOException e) {
+        } catch (IOException | NullPointerException e) {
             //TODO: Handle
+            System.out.println("Whoops, we encountered a problem!");
             e.printStackTrace();
         }
     }
@@ -46,7 +47,6 @@ public class Router {
     }
 
     public static void messageBroker(String msg) {
-        System.out.println("messageBroker! - "+msg);
 
         int brokerID = getBrokerID(msg);
 
@@ -65,11 +65,12 @@ public class Router {
 
     private static int getBrokerID(String msg) {
         int ID = -1;
-
-        String[] split = msg.split("|");
-        for (int i = 0; i < split.length; i++) {
-            if (split[i].contains("22=")) {
-                ID = Integer.parseInt(split[i].split("=")[1]);
+        String[] split = msg.split("\\|");
+        
+        for (String temp : split) {
+            if (temp.contains("22=")) {
+                String[] arr = temp.split("=");
+                ID = Integer.parseInt(arr[1]);
             }
         }
         return (ID);
@@ -83,7 +84,6 @@ public class Router {
 	public static void addNewBroker(SomeName newBroker) {
         System.out.println("addNewBroker!");
         brokers.add(newBroker);
-        System.out.println("My BrokerID is: " + newBroker.getID());
         System.out.println("There are " + brokers.size() + " brokers");
 	}
 
