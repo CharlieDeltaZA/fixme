@@ -17,8 +17,8 @@ public class Executor {
     private final PrintWriter marketOut;
     private final BufferedReader marketIn;
     private ExecutorService pool;
-    private FixValidation fix;
-    private Generator genny;
+    private final FixValidation fix;
+    private final Generator genny;
     
     public Executor(BufferedReader marketIn, PrintWriter marketOut) {
         this.marketIn = marketIn;
@@ -36,10 +36,11 @@ public class Executor {
 
         @Override
         public void run() {
+            int ID = 0;
             System.out.println("Broker Connected!");
 
             try {
-                int ID = genny.genBrokerID(brokers);
+                ID = genny.genBrokerID(brokers);
                 brokers.add(ID);
     
                 PrintWriter brokerOut = new PrintWriter(broker.getOutputStream(), true);
@@ -81,6 +82,8 @@ public class Executor {
                 } catch (IOException | NullPointerException e) {
                     System.out.println("Error closing broker connection.");
                 }
+                // remove ID from arraylist
+                brokers.remove(ID);
             }
         }
 
