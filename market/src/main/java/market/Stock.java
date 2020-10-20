@@ -64,6 +64,10 @@ public class Stock {
         return false;
     }
 
+    private void saveToDatabase(ArrayList<Product> products) {
+        
+    }
+
     public ArrayList<Product> getProducts() {
         return products;
     }
