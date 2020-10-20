@@ -12,7 +12,7 @@ public class Router {
     private static final int BROKER_PORT = 5000;
     private static Instance market = null;
     private static ArrayList<Instance> brokers = new ArrayList<Instance>();
-    private static FixValidation fix = new FixValidation();
+    private static final FixValidation fix = new FixValidation();
 
     public static void main(String[] args) {
         ExecutorService pool = Executors.newFixedThreadPool(2);
@@ -27,12 +27,8 @@ public class Router {
             while (true) {
                 // Just leave me empty :)
             }
-
-
         } catch (IOException | NullPointerException e) {
-            //TODO: Handle Me
-            System.out.println("Whoops, we encountered a problem!");
-            e.printStackTrace();
+            System.out.println("Error encountered while running thread pool.");
         }
     }
 
@@ -42,22 +38,23 @@ public class Router {
     }
 
     public static void messageBroker(String msg) {
-
         int brokerID = getBrokerID(msg);
 
-        if (brokerID == -1) System.exit(-1); // Remove/refine me
+        if (brokerID == -1) System.out.println("Unable to obtain broker ID from FIX.");
+        else {
+            for (Instance broker : brokers) {
+                if (brokerID == broker.getID()) {
+                    int result = fix.validateMarketFix(msg);
 
-        for (Instance broker : brokers) {
-            if (brokerID == broker.getID()) {
-                int result = fix.validateMarketFix(msg);
-
-                if (result == 1) broker.getOut().println(msg);
-                else if (result == 0) broker.getOut().println("Formatting Error - Market Message!");
-                else if (result == -1) broker.getOut().println("The Market might be down, try restarting it!");
+                    if (result == 1) broker.getOut().println(msg);
+                    else if (result == 0) broker.getOut().println("Formatting Error - Market Message!");
+                    else if (result == -1) broker.getOut().println("The Market might be down, try restarting it!");
+                }
             }
         }
     }
 
+    // obtains broker ID from the market FIX
     private static int getBrokerID(String msg) {
         int ID = -1;
         String[] split = msg.split("\\|");

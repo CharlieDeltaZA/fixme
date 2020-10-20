@@ -12,7 +12,7 @@ import java.util.concurrent.Executors;
 
 public class BrokerHandler implements Runnable {
 
-    private ServerSocket brokerSocket;
+    private final ServerSocket brokerSocket;
 
     BrokerHandler(ServerSocket brokerSocket) {
         this.brokerSocket = brokerSocket;
@@ -33,7 +33,7 @@ public class BrokerHandler implements Runnable {
         }
     }
 
-    private class Broker implements Runnable {
+    private static class Broker implements Runnable {
 
         private final Socket socket;
         private PrintWriter brokerOut;

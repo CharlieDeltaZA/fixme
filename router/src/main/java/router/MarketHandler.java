@@ -11,7 +11,7 @@ import java.util.concurrent.Executors;
 
 public class MarketHandler implements Runnable {
 
-    private ServerSocket marketSocket;
+    private final ServerSocket marketSocket;
 
     MarketHandler(ServerSocket marketSocket) {
         this.marketSocket = marketSocket;
@@ -33,7 +33,7 @@ public class MarketHandler implements Runnable {
         }
     }
 
-    private class Market implements Runnable {
+    private static class Market implements Runnable {
 
         private final Socket socket;
         private PrintWriter marketOut;
@@ -64,16 +64,13 @@ public class MarketHandler implements Runnable {
                         marketOut.println(ID);
     
                         System.out.println("Added New Market: " + ID);
-                    
                     } else {
                         // Pass FIX order to broker via router
                         Router.messageBroker(inputLine);
                     }
                 }
             } catch (IOException | NullPointerException e) {
-                //TODO Handle Me
-                System.out.println("Hey, you found an unhandled exception!");
-                e.printStackTrace();
+                System.out.println("Error while implementing market functionality.");
             } finally {
                 try {
                     socket.close();
@@ -84,11 +81,6 @@ public class MarketHandler implements Runnable {
                 // remove ID from routing table
                 Router.removeMarket(ID);
             }
-
-
-
         }
-        
     }
-    
 }
