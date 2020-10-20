@@ -23,9 +23,10 @@ mvn clean package
 **Optional - Setup a MongoDB instance to save transactions**
 
 Install MongoDB:
+
 https://docs.mongodb.com/manual/administration/install-community/
 
-Start up a local MongoDB instance on MacOS:
+Start up a local MongoDB instance on MacOS (See relevant documentation for different OS):
 ```
 brew services start mongodb-community@4.4
 ```
@@ -54,4 +55,13 @@ java -jar ./target/market-1.0.0.jar [--save]
 ```
 cd ./broker
 java -jar ./target/broker-1.0.0.jar
+```
+
+**To Verify content in Database:**
+
+Open a new terminal, and run `mongo` to enter the mongo shell. 
+Thereafter:
+```
+use fixme
+db.transactions.find().pretty()
 ```
