@@ -13,6 +13,14 @@
     <artifactId>market</artifactId>
     <version>1.0.0</version>
 
+    <dependencies>
+      <dependency>
+          <groupId>org.mongodb</groupId>
+          <artifactId>mongodb-driver-sync</artifactId>
+          <version>4.1.1</version>
+      </dependency>
+    </dependencies>
+  
     <build>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
