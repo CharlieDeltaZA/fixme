@@ -40,7 +40,7 @@ public class Executor {
             System.out.println("Broker Connected!");
 
             try {
-                ID = genny.genBrokerID(brokers);
+                ID = genny.genBrokerID();
                 brokers.add(ID);
     
                 PrintWriter brokerOut = new PrintWriter(broker.getOutputStream(), true);
