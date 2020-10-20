@@ -8,13 +8,26 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Arrays;
 
 public class Market {
 
     public static void main(String[] args) {
 
         int ID;
-        Stock stock = new Stock();
+        boolean save = false;
+
+        try {
+            if (args.length > 0) {
+                if (args[0].equalsIgnoreCase("--save")) {
+                    System.out.println(Arrays.toString(args) + " = on");
+                    save = true;
+                }
+            } else System.out.println("[--save] = off");
+        } catch (NullPointerException | IndexOutOfBoundsException e) {
+            System.out.println("Error accessing arguments.");
+        }
+        Stock stock = new Stock(save);
 
         System.out.println("Stock -> Products available: " + stock.getProducts().size());
         if (stock.getProducts().size() > 0) {

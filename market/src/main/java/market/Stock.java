@@ -15,13 +15,15 @@ import java.util.ArrayList;
 public class Stock {
 
     private ArrayList<Product> products = new ArrayList<>();
-    private final MongoClient mongoClient;
+    private MongoClient mongoClient;
+    private final boolean save;
 
-    public Stock() {
+    public Stock(boolean save) {
         String line;
+        this.save = save;
 
         // creating a mongoDB connection pool
-        mongoClient = MongoClients.create();
+        if (save) mongoClient = MongoClients.create();
 
         try {
             FileReader fr = new FileReader("stocks.txt");
@@ -64,7 +66,7 @@ public class Stock {
 
         for (Product prod: products) line += prod.getName() + ":" + prod.getQuantity() + ":" + prod.getCost() + "\n";
 
-        saveToDatabase(order, "successful");
+        if (save) saveToDatabase(order, "successful");
 
         try {
             FileWriter fw = new FileWriter("stocks.txt");
