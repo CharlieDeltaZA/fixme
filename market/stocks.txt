@@ -1,4 +1,4 @@
 Surfboard:12:34
 Wax:0:5
-Wetsuits:20:30
+Wetsuits:19:30
 Fins:20:20
