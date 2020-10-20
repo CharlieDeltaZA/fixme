@@ -38,7 +38,7 @@ public class MarketHandler implements Runnable {
         private final Socket socket;
         private PrintWriter marketOut;
         private BufferedReader marketIn;
-        Generator genny = new Generator();
+        private Generator genny = new Generator();
 
         Market(Socket sock) {
             this.socket = sock;
@@ -60,23 +60,18 @@ public class MarketHandler implements Runnable {
     
                     if (inputLine.equals("Market Connecting")) {
                         ID = genny.genMarketID();
-                        // markets.add(ID);
-                        Router.addNewMarket(new router.SomeName(ID, marketOut, marketIn)); //LOGIC REQUIRED
+                        Router.addNewMarket(new router.Instance(ID, marketOut, marketIn));
                         marketOut.println(ID);
     
                         System.out.println("Added New Market: " + ID);
                     
-                    //                     // construct executor class
-                    //                     Executor brokerExec = new Executor(marketIn, marketOut);
-                    //                     brokerExec.openServer();
-                    //                     break;
                     } else {
                         // Pass FIX order to broker via router
                         Router.messageBroker(inputLine);
                     }
                 }
             } catch (IOException | NullPointerException e) {
-                //TODO Handle
+                //TODO Handle Me
                 System.out.println("Hey, you found an unhandled exception!");
                 e.printStackTrace();
             } finally {
@@ -86,8 +81,7 @@ public class MarketHandler implements Runnable {
                 } catch (IOException | NullPointerException e) {
                     System.out.println("Error closing market connection.");
                 }
-                // remove ID from arraylist
-                // brokers.remove(ID);
+                // remove ID from routing table
                 Router.removeMarket(ID);
             }
 

@@ -1,7 +1,5 @@
 package router;
 
-import java.util.ArrayList;
-
 public class Generator {
 
     public int genMarketID() {
@@ -11,10 +9,6 @@ public class Generator {
 
     public int genBrokerID() {
         // assign it between 500,000 and 999,999
-        int id;
-        // while (id == 1 || brokers.contains(id)) {
-            id = (int) (Math.random() * (500001 - 999999 + 1) + 999999);
-        // }
-        return id;
+        return (int) (Math.random() * (500001 - 999999 + 1) + 999999);
     }
 }

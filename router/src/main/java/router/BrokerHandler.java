@@ -38,8 +38,8 @@ public class BrokerHandler implements Runnable {
         private final Socket socket;
         private PrintWriter brokerOut;
         private BufferedReader brokerIn;
-        Generator genny = new Generator();
-        FixValidation fix = new FixValidation();
+        private Generator genny = new Generator();
+        private FixValidation fix = new FixValidation();
 
         Broker(Socket sock) {
             this.socket = sock;
@@ -53,12 +53,11 @@ public class BrokerHandler implements Runnable {
 
             try {
                 ID = genny.genBrokerID();
-                // brokers.add(ID);
                 
-                PrintWriter brokerOut = new PrintWriter(socket.getOutputStream(), true);
-                BufferedReader brokerIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                brokerOut = new PrintWriter(socket.getOutputStream(), true);
+                brokerIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-                Router.addNewBroker(new router.SomeName(ID, brokerOut, brokerIn));
+                Router.addNewBroker(new router.Instance(ID, brokerOut, brokerIn));
                 
                 brokerOut.println(ID);
                 System.out.println("Added New Broker: " + ID);
@@ -68,22 +67,7 @@ public class BrokerHandler implements Runnable {
     
                     if (orderMsg == null) break;
     
-                    if (fix.validateFix(orderMsg)) {
-                        // marketOut.println(orderMsg);
-                        Router.messageMarket(orderMsg);
-
-                        // String marketRet = marketIn.readLine();
-
-                        // Send order to market, via router:
-                        // THEN - let market do it's thing and call send2Broker
-                        // Validate the marketRet msg in send2Broker, then send it off appropriately
-
-                        // int result = fix.validateMarketFix(marketRet);
-
-                        // if (result == 1) brokerOut.println(marketRet);
-                        // else if (result == 0) brokerOut.println("Formatting Error - Market Message!");
-                        // else if (result == -1) brokerOut.println("The Market might be down, try restarting it!");
-                    }
+                    if (fix.validateFix(orderMsg)) Router.messageMarket(orderMsg);
                     else brokerOut.println("Formatting Error - Order Message!");
                 }
 
@@ -101,8 +85,7 @@ public class BrokerHandler implements Runnable {
                 } catch (IOException | NullPointerException e) {
                     System.out.println("Error closing broker connection.");
                 }
-                // remove ID from arraylist
-                // brokers.remove(ID);
+                // remove ID from routing table
                 Router.removeBroker(ID);
             }
         }
