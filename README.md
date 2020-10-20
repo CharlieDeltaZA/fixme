@@ -22,6 +22,9 @@ mvn clean package
 
 **Optional - Setup a MongoDB instance to save transactions**
 
+Install MongoDB:
+https://docs.mongodb.com/manual/administration/install-community/
+
 Start up a local MongoDB instance on MacOS:
 ```
 brew services start mongodb-community@4.4
