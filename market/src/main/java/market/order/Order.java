@@ -38,8 +38,11 @@ public class Order {
 
         String res =  available.process(products, this.query, marketID);
 
-        if (res.equalsIgnoreCase("Rejected")) return createMsg();
-        else return res;
+        if (res.equalsIgnoreCase("Rejected")) {
+            products.saveToDatabase(query, "rejected");
+            return createMsg();
+        }
+        return res;
     }
 
     private String createMsg() {
@@ -65,7 +68,7 @@ public class Order {
     // BUY: check if there is enough funds available to buy requested quantity = (quantity * stock price per product)
 
     // UPDATE:
-    // update stocks arraylist && save stocks to file
+    // update stocks arraylist && save stocks to file && database
 
     // MESSAGE:
     // return accepted

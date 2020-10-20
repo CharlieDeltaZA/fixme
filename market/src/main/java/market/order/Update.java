@@ -37,14 +37,14 @@ public class Update implements  Chain{
                 selected.setQuantity(qnty - quantityReq);
 
                 stock = updateList(stock, selected);       ///////////////// CHECK IF NECESSARY
-                return products.saveProducts(stock);
+                return products.saveProducts(stock, order);
             }
             case "sell" -> {
                 int qnty = selected.getQuantity();
                 selected.setQuantity(qnty + quantityReq);
 
                 stock = updateList(stock, selected);        ///////////////// CHECK IF NECESSARY
-                return products.saveProducts(stock);
+                return products.saveProducts(stock, order);
             }
         }
         return false;
