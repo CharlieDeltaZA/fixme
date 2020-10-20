@@ -57,7 +57,7 @@ public class Validation {
         char[] charArray = str.toCharArray();
 
         for (char ch : charArray) {
-            if (!(ch >= 'a' && ch <= 'z')) {
+            if (!(ch >= 'a' && ch <= 'z')  && (ch != ' ')) {
                 return false;
             }
         }
