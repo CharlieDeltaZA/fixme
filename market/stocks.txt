@@ -1,10 +1,10 @@
 Surfboard:12:34
-Wax:68:5
+Wax:96:5
 Wetsuits:20:30
 Fins:20:20
 Leash:23:18
 Traction:100:12
 Vans Originals:3:28
-Ripcurl Cap:4:8
+Ripcurl Cap:2:8
 Booties:9:13
 Hoodie:10:19

@@ -52,7 +52,11 @@ public class Business {
                 String fromServer = in.readLine();
 
                 // prints results returned
-                if (fromServer != null) System.out.println("Result: " + fromServer + "\n");
+                if (fromServer != null) {
+                    System.out.println("Result: " + fromServer);
+                    if (fromServer.contains("Rejected")) System.out.println(ANSI_RED + "Rejected\n" + ANSI_RESET);
+                    else if (fromServer.contains("Accepted")) System.out.println(ANSI_GREEN + "Accepted\n" + ANSI_RESET);
+                }
                 else System.out.println(ANSI_RED + "The result from the market was unidentifiable. Please try again later!\n" + ANSI_RESET);
             } catch (IOException e) {
                 System.out.println(ANSI_RED + "\nUnable to communicate with the server. Please try again!\n" + ANSI_RESET);
