@@ -1,11 +1,11 @@
 # Fix-Me
 
-### Score TBC/100
+### Score 119/100
 #### Mandatory
-TBC/100
+100/100
 
 #### Bonus
-TBC/25
+19/25
 
 #### Project Overview:
 3rd Java project @ WeThinkCode_
