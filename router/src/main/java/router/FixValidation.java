@@ -2,6 +2,7 @@ package router;
 
 public class FixValidation {
 
+    // Validates the FIX message received from a broker.
     public boolean validateFix(String msg) {
         String[] arr = msg.split("\\|");
         String checksum = "";
@@ -35,6 +36,9 @@ public class FixValidation {
         return result == Integer.parseInt(checksum);
     }
 
+    // Validates the FIX message received from a market.
+    // Returns a number of different ints depending on validity of the message
+    // so that the router can return an appropriate message.
     public int validateMarketFix(String msg) {
         String checksum = "";
         int result = 0;

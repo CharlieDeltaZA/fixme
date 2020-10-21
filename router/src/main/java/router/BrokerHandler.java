@@ -18,17 +18,21 @@ public class BrokerHandler implements Runnable {
         this.brokerSocket = brokerSocket;
     }
 
+    // Spawns a thread pool of 8, and waits for a broker to connect.
+    // When a broker connects, it passes the socket off to a new class
+    // that handles running the socket in the thread pool.
     @Override
     public void run() {
         ExecutorService pool = Executors.newFixedThreadPool(8);
         System.out.println("Broker listening on port " + brokerSocket.getLocalPort());
+        System.out.println("Waiting for a broker to connect...");
 
         try {
             while (true) {
                 pool.execute(new Broker(brokerSocket.accept()));
             }
         } catch (IOException e) {
-            System.out.println("IOException: " + e);
+            System.out.println("[BrokerHandler] IOException: " + e);
         }
     }
 
@@ -44,6 +48,8 @@ public class BrokerHandler implements Runnable {
             this.socket = sock;
         }
 
+        // Runnable that handles receiving messages from the Broker component, and sending messages
+        // to the market via the Router.
         @Override
         public void run() {
             int ID = 0;

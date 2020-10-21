@@ -3,6 +3,8 @@ package router;
 import java.io.BufferedReader;
 import java.io.PrintWriter;
 
+// Essentially just a class to store either Broker or Market objects to be
+// referenced from the routers public methods.
 public class Instance {
     private int ID;
     private PrintWriter out;

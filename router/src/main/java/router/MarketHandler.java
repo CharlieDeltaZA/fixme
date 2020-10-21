@@ -17,6 +17,9 @@ public class MarketHandler implements Runnable {
         this.marketSocket = marketSocket;
     }
 
+    // Spawns a thread pool of 1, and waits for a market to connect.
+    // When a market connects, it passes the socket off to a new class
+    // that handles running the socket in the thread pool.
     @Override
     public void run() {
         ExecutorService pool = Executors.newFixedThreadPool(1); // 3
@@ -28,7 +31,7 @@ public class MarketHandler implements Runnable {
                 pool.execute(new Market(marketSocket.accept()));
             }
         } catch (IOException e) {
-            System.out.println("IOException: " + e);
+            System.out.println("[MarketHandler] IOException: " + e);
         }
     }
 
@@ -43,6 +46,8 @@ public class MarketHandler implements Runnable {
             this.socket = sock;
         }
 
+        // Runnable that handles receiving messages from the Market component, and sending messages
+        // to the relevant broker via the Router.
         @Override
         public void run() {
             String inputLine;
@@ -68,7 +73,7 @@ public class MarketHandler implements Runnable {
                     }
                 }
             } catch (IOException | NullPointerException e) {
-                System.out.println("Error while implementing market functionality.");
+                System.out.println("Market closed unexpectedly! Please restart it.");
             } finally {
                 try {
                     socket.close();
