@@ -24,9 +24,6 @@ public class Router {
             pool.execute(new MarketHandler(marketSocket));
             pool.execute(new BrokerHandler(brokerSocket));
 
-            while (true) {
-                // Just leave me empty :)
-            }
         } catch (IOException | NullPointerException e) {
             System.out.println("Error encountered while running thread pool.");
         }
