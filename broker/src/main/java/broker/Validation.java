@@ -1,5 +1,8 @@
 package broker;
 
+// validates all input when entering a order via the terminal
+// checks for 'all chars' and & 'all integers' & 'below 0 values'
+
 public class Validation {
 
     private static final String ANSI_RESET = "\u001B[0m";

@@ -1,5 +1,8 @@
 package broker;
 
+// constructs a fix message from the order parameters
+// creates its checksum
+
 public class Fix {
 
     private String query;
