@@ -61,7 +61,8 @@ public class BrokerHandler implements Runnable {
                 brokerOut = new PrintWriter(socket.getOutputStream(), true);
                 brokerIn = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-                Router.addNewBroker(new router.Instance(ID, brokerOut, brokerIn));
+                Instance broker = new Instance(ID, brokerOut, brokerIn);
+                Router.addNewBroker(broker);
                 
                 brokerOut.println(ID);
                 System.out.println("Added New Broker: " + ID);

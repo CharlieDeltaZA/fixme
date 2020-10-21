@@ -63,7 +63,8 @@ public class MarketHandler implements Runnable {
     
                     if (inputLine.equals("Market Connecting")) {
                         ID = genny.genMarketID();
-                        Router.addNewMarket(new router.Instance(ID, marketOut, marketIn));
+                        Instance market = new Instance(ID, marketOut, marketIn);
+                        Router.addNewMarket(market);
                         marketOut.println(ID);
     
                         System.out.println("Added New Market: " + ID);
