@@ -1,5 +1,7 @@
 package market;
 
+// each product listing from the stock file is represented using this class
+
 public class Product {
 
     private String name;

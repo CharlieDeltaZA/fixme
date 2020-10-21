@@ -12,6 +12,10 @@ import java.util.Arrays;
 
 public class Market {
 
+    // First checks if the user wants to save transactions or not to the database
+    // Initializes stock list from saved txt file
+    // Opens connection to the router on port 5001, obtains given ID, awaits fix messages from the router
+
     public static void main(String[] args) {
 
         int ID;
@@ -27,12 +31,15 @@ public class Market {
         } catch (NullPointerException | IndexOutOfBoundsException e) {
             System.out.println("Error accessing arguments.");
         }
+
         Stock stock = new Stock(save);
 
         System.out.println("Stock -> Products available: " + stock.getProducts().size());
-        System.out.println("Product : Quantity : Price\n");
         if (stock.getProducts().size() > 0) {
-            for (Product item : stock.getProducts()) System.out.println(item.getName() + " : " + item.getQuantity() + " : " + item.getCost());
+            System.out.println("Product : Quantity : Price Per\n");
+            for (Product item : stock.getProducts()) {
+                System.out.println(item.getName() + " : " + item.getQuantity() + " : " + item.getCost());
+            }
         } else System.out.println("Unable to initialize stock listings, please reboot Market.");
         System.out.println("\n");
 

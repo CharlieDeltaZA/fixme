@@ -18,6 +18,8 @@ public class Stock {
     private MongoClient mongoClient;
     private final boolean save;
 
+    // opens connection to database if 'save' flag is used
+    // reads from the stock listing file to create a list of current products
     public Stock(boolean save) {
         String line;
         this.save = save;
@@ -46,6 +48,8 @@ public class Stock {
         }
     }
 
+    // takes each line from the stock listing file and constructs it into the 'Product' class
+    // added to the products list
     private void populateProduct(String[] product) {
         try {
             Product item = new Product();
@@ -60,13 +64,16 @@ public class Stock {
         }
     }
 
+    // called when a fix message must be returned to the broker after a transaction is successful or rejected
+    // saves changes to the stock to the stock listing file
+    // saves changes to the stock to the database (if flag is true)
     public boolean saveProducts(ArrayList<Product> products, ArrayList<String> order) {
         this.products = products;
         String line = "";
 
         for (Product prod: products) line += prod.getName() + ":" + prod.getQuantity() + ":" + prod.getCost() + "\n";
 
-        if (save) saveToDatabase(order, "successful");
+        saveToDatabase(order, "successful");
 
         try {
             FileWriter fw = new FileWriter("stocks.txt");
@@ -80,39 +87,44 @@ public class Stock {
         return false;
     }
 
+    // takes the current order, broker ID, data & time and constructs it into a document
+    // saves the document to the mongoDB database
     public void saveToDatabase(ArrayList<String> order, String outcome) {
-        int brokerID = Integer.parseInt(order.get(0));
-        String command = order.get(1).toLowerCase();
-        String item = order.get(2);
-        int quantityReq = Integer.parseInt(order.get(3));
-        int funds = Integer.parseInt(order.get(4));
 
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
-        LocalDateTime now = LocalDateTime.now();
+        if (save) {
+            int brokerID = Integer.parseInt(order.get(0));
+            String command = order.get(1).toLowerCase();
+            String item = order.get(2);
+            int quantityReq = Integer.parseInt(order.get(3));
+            int funds = Integer.parseInt(order.get(4));
 
-        try {
-            MongoDatabase database = mongoClient.getDatabase("fixme");
-            MongoCollection collection = database.getCollection("transactions");
+            DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+            LocalDateTime now = LocalDateTime.now();
 
-            if (outcome.equalsIgnoreCase("rejected")) {
-                Document document = new Document("broker_id", brokerID).append("operation", command)
-                        .append("product", item).append("quantity", quantityReq).append("funds", funds)
-                        .append("date", dtf.format(now))
-                        .append("result", "rejected");
-                collection.insertOne(document);
-                System.out.println("Saved failed transaction to database");
-            } else {
-                Document document = new Document("broker_id", brokerID).append("operation", command)
-                        .append("product", item).append("quantity", quantityReq).append("funds", funds)
-                        .append("date", dtf.format(now))
-                        .append("result", "successful");
-                collection.insertOne(document);
-                System.out.println("Saved successful transaction to database");
+            try {
+                MongoDatabase database = mongoClient.getDatabase("fixme");
+                MongoCollection collection = database.getCollection("transactions");
+
+                if (outcome.equalsIgnoreCase("rejected")) {
+                    Document document = new Document("broker_id", brokerID).append("operation", command)
+                            .append("product", item).append("quantity", quantityReq).append("funds", funds)
+                            .append("date", dtf.format(now))
+                            .append("result", "rejected");
+                    collection.insertOne(document);
+                    System.out.println("Saved failed transaction to database");
+                } else {
+                    Document document = new Document("broker_id", brokerID).append("operation", command)
+                            .append("product", item).append("quantity", quantityReq).append("funds", funds)
+                            .append("date", dtf.format(now))
+                            .append("result", "successful");
+                    collection.insertOne(document);
+                    System.out.println("Saved successful transaction to database");
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println("Error retrieving info from the database.");
+            } catch (MongoException e) {
+                System.out.println("Error writing transaction to the database.");
             }
-        } catch (IllegalArgumentException e) {
-            System.out.println("Error retrieving info from the database.");
-        } catch (MongoException e) {
-            System.out.println("Error writing transaction to the database.");
         }
     }
 
