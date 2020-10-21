@@ -30,8 +30,9 @@ public class Market {
         Stock stock = new Stock(save);
 
         System.out.println("Stock -> Products available: " + stock.getProducts().size());
+        System.out.println("Product : Quantity : Price\n");
         if (stock.getProducts().size() > 0) {
-            for (Product item : stock.getProducts()) System.out.println(item.getName() + " " + item.getQuantity() + " " + item.getCost());
+            for (Product item : stock.getProducts()) System.out.println(item.getName() + " : " + item.getQuantity() + " : " + item.getCost());
         } else System.out.println("Unable to initialize stock listings, please reboot Market.");
         System.out.println("\n");
 

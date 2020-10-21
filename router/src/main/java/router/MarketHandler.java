@@ -49,7 +49,7 @@ public class MarketHandler implements Runnable {
             // TODO Auto-generated method stub
             String inputLine;
             int ID = -1;
-            System.out.println("Market connected!");
+            System.out.println("Market Connected!");
 
             try {
                 marketOut = new PrintWriter(socket.getOutputStream(), true);
