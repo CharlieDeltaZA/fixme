@@ -1,5 +1,8 @@
 package market.order;
 
+// constructs the fix message for the market output
+// it is different to the broker fix messages as this contains the broker ID and the order outcome
+
 public class MarketFix {
 
     private String brokerID;
@@ -10,7 +13,6 @@ public class MarketFix {
     private String outcome;
 
     public MarketFix(String[] input) {
-
         try {
             query = "35=" + input[0].trim() + "|";
             product = "7=" + input[1].trim() + "|";

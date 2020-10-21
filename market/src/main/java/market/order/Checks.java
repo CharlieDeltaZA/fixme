@@ -14,6 +14,7 @@ public class Checks implements  Chain {
         this.next = next;
     }
 
+    // does the extensive checks and if successful moves on to the next process
     @Override
     public String process(Stock products, ArrayList<String> order, int marketID) {
         if (extensiveChecks(products, order)) {
@@ -23,17 +24,17 @@ public class Checks implements  Chain {
         else return "Rejected";
     }
 
+    // does extensive checks to see if the order is possible with the current stock listings
+    // CHECKS:
+    // BUY: check if there is enough stock to buy the requested quantity
+    // BUY: check if there is enough funds available to buy requested quantity = (quantity * stock price per product)
+    // SELL: check if cost of selling 1 product is higher than 1 product selling price in stocks.txt
     private boolean extensiveChecks(Stock products, ArrayList<String> order) {
         String command = order.get(1).toLowerCase();
         String item = order.get(2);
         ArrayList<Product> stock = products.getProducts();
 
         Product selected = selectProduct(stock, item);
-
-        // CHECKS:
-        // BUY: check if there is enough stock to buy the requested quantity
-        // BUY: check if there is enough funds available to buy requested quantity = (quantity * stock price per product)
-        // SELL: check if cost of selling 1 product is higher than 1 product selling price in stocks.txt
 
         switch (command) {
             case "buy" -> {
@@ -59,6 +60,7 @@ public class Checks implements  Chain {
         return false;
     }
 
+    // retrieves specific product object from the list
     private Product selectProduct(ArrayList<Product> stock, String item) {
         for (Product prod: stock) {
             if (prod.getName().equalsIgnoreCase(item)) return prod;

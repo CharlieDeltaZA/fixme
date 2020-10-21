@@ -19,8 +19,9 @@ public class Business {
     PrintWriter out;
     BufferedReader in;
 
+    // establishes connection to router
+    // stores ID that is given
     public Business() {
-        // establishes connection to router - stores ID that is given
         try {
             bSock = new Socket("localhost", 5000);
             out = new PrintWriter(bSock.getOutputStream(), true);
@@ -38,6 +39,9 @@ public class Business {
         }
     }
 
+    // constructs a valid fix message from the order parameters
+    // sends the message through to the router
+    // prints results returned from the router
     private void sendOrder(String[] order) {
         Fix fix = new Fix(order);
         String msg = fix.constructFix(ID);
@@ -48,10 +52,8 @@ public class Business {
             try {
                 out.println(msg);
 
-                // FIX msg returned from market
                 String fromServer = in.readLine();
 
-                // prints results returned
                 if (fromServer != null) {
                     System.out.println("Result: " + fromServer);
                     if (fromServer.contains("Rejected")) System.out.println(ANSI_RED + "Rejected\n" + ANSI_RESET);
@@ -66,6 +68,8 @@ public class Business {
         }
     }
 
+    // reads in orders from the terminal input and validates them
+    // once a valid order is entered it then calls 'sendOrder()'
     public void takeOrders() {
         Validation validate = new Validation();
         Scanner scan = new Scanner(System.in);
@@ -92,6 +96,7 @@ public class Business {
         }
     }
 
+    // provides a user interface where the user can connect to the router or quit
     public boolean getInitialization() {
         Scanner scan = new Scanner(System.in);
 
@@ -106,6 +111,8 @@ public class Business {
         return line.equalsIgnoreCase("C");
     }
 
+    // provides some instructions on how an order should be formatted
+    // printed out after every order outcome and after every invalid order
     private void printTakeOrder() {
         System.out.println("You can provide a buy or sell order in the following format: (Enter 'Q' to quit session)");
         System.out.println(ANSI_CYAN + "Buy - Object - Quantity - Funds Available" + ANSI_RESET + " OR " + ANSI_CYAN + "Sell - Object - Quantity - Selling Price Per Object" + ANSI_RESET);

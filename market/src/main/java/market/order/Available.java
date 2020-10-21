@@ -14,6 +14,7 @@ public class Available implements Chain {
         this.next = next;
     }
 
+    // does the check and if successful moves on to the next check
     @Override
     public String process(Stock products, ArrayList<String> order, int marketID) {
         if (productAvailable(products, order)) {
@@ -23,7 +24,7 @@ public class Available implements Chain {
         else return "Rejected";
     }
 
-    // Checks if the requested product is available in stocks
+    // checks if the requested product is available in the stock listing
     private boolean productAvailable(Stock products, ArrayList<String> order) {
         ArrayList<Product> stock = products.getProducts();
         String orderProd = order.get(2);

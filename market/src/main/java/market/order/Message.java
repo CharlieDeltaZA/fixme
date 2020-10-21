@@ -13,11 +13,13 @@ public class Message implements Chain{
         this.next = next;
     }
 
+    // once the fix message has been made it is returned all along the chain back to the 'Order' class
     @Override
     public String process(Stock products, ArrayList<String> order, int marketID) {
         return createMsg(order, marketID);
     }
 
+    // prepares all relevant info that is used to construct the market fix message
     private String createMsg(ArrayList<String> order, int marketID) {
         String[] info = new String[6];
 
