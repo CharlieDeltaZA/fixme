@@ -20,7 +20,6 @@ public class BrokerHandler implements Runnable {
 
     @Override
     public void run() {
-        // TODO Auto-generated method stub
         ExecutorService pool = Executors.newFixedThreadPool(8);
         System.out.println("Broker listening on port " + brokerSocket.getLocalPort());
 
@@ -47,7 +46,6 @@ public class BrokerHandler implements Runnable {
 
         @Override
         public void run() {
-            // TODO Auto-generated method stub
             int ID = 0;
             System.out.println("Broker Connected!");
 
