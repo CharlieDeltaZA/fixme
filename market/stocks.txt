@@ -1,5 +1,5 @@
 Surfboard:11:34
-Wax:94:5
+Wax:92:5
 Wetsuits:20:30
 Fins:20:20
 Leash:23:18

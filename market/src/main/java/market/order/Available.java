@@ -45,7 +45,6 @@ public class Available implements Chain {
             }
 
         }
-
         return found;
     }
 }
