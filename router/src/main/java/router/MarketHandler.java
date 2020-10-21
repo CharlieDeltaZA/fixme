@@ -19,7 +19,6 @@ public class MarketHandler implements Runnable {
 
     @Override
     public void run() {
-        // TODO Auto-generated method stub
         ExecutorService pool = Executors.newFixedThreadPool(1); // 3
         System.out.println("Market listening on port " + marketSocket.getLocalPort());
         System.out.println("Waiting for a market to connect...");
@@ -46,7 +45,6 @@ public class MarketHandler implements Runnable {
 
         @Override
         public void run() {
-            // TODO Auto-generated method stub
             String inputLine;
             int ID = -1;
             System.out.println("Market Connected!");
